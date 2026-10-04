@@ -1,6 +1,6 @@
 {
   "name": "create-easy-stack",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Personal project generator: NestJS DDD, React/Vue FSD & monolith templates + pluggable infra (Prisma, Redis, RabbitMQ...).",
   "type": "module",
   "bin": {
