@@ -1,10 +1,10 @@
 {
-  "name": "create-snack",
-  "version": "1.0.1",
+  "name": "create-easy-stack",
+  "version": "1.0.2",
   "description": "Personal project generator: NestJS DDD, React/Vue FSD & monolith templates + pluggable infra (Prisma, Redis, RabbitMQ...).",
   "type": "module",
   "bin": {
-    "create-snack": "./bin/create.mjs"
+    "create-easy-stack": "./bin/create.mjs"
   },
   "scripts": {
     "create": "node bin/create.mjs",
