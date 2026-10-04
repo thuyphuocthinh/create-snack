@@ -28,10 +28,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thuyphuocthinh/create-snack.git"
+    "url": "https://github.com/thuyphuocthinh/create-easy-stack.git"
   },
-  "homepage": "https://github.com/thuyphuocthinh/create-snack#readme",
+  "homepage": "https://github.com/thuyphuocthinh/create-easy-stack#readme",
   "bugs": {
-    "url": "https://github.com/thuyphuocthinh/create-snack/issues"
+    "url": "https://github.com/thuyphuocthinh/create-easy-stack/issues"
   }
 }
