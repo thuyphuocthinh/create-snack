@@ -1,0 +1,60 @@
+{
+  "id": "prisma-postgres",
+  "label": "PostgreSQL + Prisma (adapter-pg)",
+  "default": true,
+  "templates": ["nest-ddd"],
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "prisma": "7.10.0"
+  },
+  "scripts": {
+    "postinstall": "prisma generate || exit 0",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio"
+  },
+  "env": [
+    "# PostgreSQL (docker-compose.yml)",
+    "DATABASE_URL=\"postgresql://root:rootpassword@localhost:5432/{{PROJECT_NAME_SNAKE}}_db?schema=public\""
+  ],
+  "docker": {
+    "file": "docker.service.yml",
+    "volumes": ["postgres_data"]
+  },
+  "inject": [
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:imports",
+      "lines": ["import { DatabaseModule } from './core/infrastructure/database/database.module.js';"]
+    },
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:modules",
+      "lines": ["DatabaseModule,"]
+    },
+    {
+      "file": "src/core/index.ts",
+      "marker": "// @infra:barrel",
+      "lines": [
+        "export * from './infrastructure/database/prisma.service.js';",
+        "export * from './infrastructure/database/database.module.js';"
+      ]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-imports",
+      "lines": ["import { validateDatabaseEnv } from './database.env.js';"]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-checks",
+      "lines": ["validateDatabaseEnv(config, errors);"]
+    }
+  ]
+}

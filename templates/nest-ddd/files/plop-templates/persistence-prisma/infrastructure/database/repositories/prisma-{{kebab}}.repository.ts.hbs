@@ -1,0 +1,28 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { PrismaService } from '@/core/index.js';
+import { I{{Pascal}}Repository, {{Pascal}} } from '../../../domain/index.js';
+import { {{Pascal}}PersistenceMapper } from '../mappers/{{kebab}}.mapper.js';
+
+@Injectable()
+export class Prisma{{Pascal}}Repository implements I{{Pascal}}Repository {
+  private readonly logger = new Logger(Prisma{{Pascal}}Repository.name);
+
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findById(id: string): Promise<{{Pascal}} | null> {
+    this.logger.debug(`Finding {{kebab}} by ID: ${id}`);
+    const row = await this.prisma.{{camel}}.findUnique({ where: { id } });
+    return row ? {{Pascal}}PersistenceMapper.toDomain(row) : null;
+  }
+
+  async save(entity: {{Pascal}}): Promise<void> {
+    this.logger.debug(`Saving {{kebab}}: ${entity.id}`);
+    const data = {{Pascal}}PersistenceMapper.toPersistence(entity);
+    await this.prisma.{{camel}}.upsert({
+      where: { id: data.id },
+      create: data,
+      update: data,
+    });
+    entity.clearEvents();
+  }
+}

@@ -1,0 +1,13 @@
+import { {{Pascal}} } from '../../domain/index.js';
+import { {{Pascal}}ResponseDto } from '../dtos/{{kebab}}-response.dto.js';
+
+export class {{Pascal}}Mapper {
+  static toResponse(entity: {{Pascal}}): {{Pascal}}ResponseDto {
+    return {
+      id: entity.id,
+      name: entity.name,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+    };
+  }
+}

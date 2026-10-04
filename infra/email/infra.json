@@ -1,0 +1,58 @@
+{
+  "id": "email",
+  "label": "Email (SMTP / log adapter, sent through the job queue)",
+  "templates": ["nest-ddd"],
+  "requires": ["rabbitmq"],
+  "dependencies": {
+    "nodemailer": "^10.0.13"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.2"
+  },
+  "env": [
+    "# Email — 'log' only prints messages (dev); 'smtp' sends through any SMTP server",
+    "EMAIL_PROVIDER=log",
+    "SMTP_HOST=",
+    "SMTP_PORT=587",
+    "SMTP_USER=",
+    "SMTP_PASS=",
+    "EMAIL_FROM=\"{{PROJECT_NAME}} <no-reply@example.com>\"",
+    "# Encrypts job payloads (email addresses, one-time codes) in the queue. >= 32 chars",
+    "JOB_PAYLOAD_SECRET=change-me-to-a-random-string-of-32-chars-or-more"
+  ],
+  "inject": [
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:imports",
+      "lines": ["import { EmailModule } from './core/infrastructure/email/email.module.js';"]
+    },
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:modules",
+      "lines": ["EmailModule,"]
+    },
+    {
+      "file": "src/core/index.ts",
+      "marker": "// @infra:barrel",
+      "lines": [
+        "export * from './infrastructure/email/email-sender.port.js';",
+        "export * from './infrastructure/email/email-dispatcher.port.js';",
+        "export * from './infrastructure/email/email-layout.js';",
+        "export * from './infrastructure/email/email-sender.factory.js';",
+        "export * from './infrastructure/email/log-email-sender.js';",
+        "export * from './infrastructure/email/smtp-email-sender.js';",
+        "export * from './infrastructure/email/email.module.js';"
+      ]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-imports",
+      "lines": ["import { validateEmailEnv } from './email.env.js';"]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-checks",
+      "lines": ["validateEmailEnv(config, errors);"]
+    }
+  ]
+}

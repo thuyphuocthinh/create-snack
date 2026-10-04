@@ -1,0 +1,40 @@
+import { Module } from '@nestjs/common';
+import { CqrsModule } from '@nestjs/cqrs';
+
+// Controllers
+import { {{Pascal}}Controller } from './presentation/index.js';
+
+// Handlers
+import {
+  Create{{Pascal}}Handler,
+  Get{{Pascal}}ByIdHandler,
+  // @plop:handler-imports
+} from './application/index.js';
+
+// Repositories
+import { {{#if prisma}}Prisma{{else}}InMemory{{/if}}{{Pascal}}Repository } from './infrastructure/index.js';
+
+const CommandHandlers = [
+  Create{{Pascal}}Handler,
+  // @plop:command-handlers
+];
+const QueryHandlers = [
+  Get{{Pascal}}ByIdHandler,
+  // @plop:query-handlers
+];
+
+@Module({
+  imports: [CqrsModule],
+  controllers: [{{Pascal}}Controller],
+  providers: [
+    // Repositories
+    {
+      provide: 'I{{Pascal}}Repository',
+      useClass: {{#if prisma}}Prisma{{else}}InMemory{{/if}}{{Pascal}}Repository,
+    },
+    // Handlers
+    ...CommandHandlers,
+    ...QueryHandlers,
+  ],
+})
+export class {{Pascal}}Module {}

@@ -1,0 +1,29 @@
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { Inject, Logger } from '@nestjs/common';
+import { Get{{Pascal}}ByIdQuery } from './get-{{kebab}}-by-id.query.js';
+import { {{Pascal}}, {{Pascal}}DomainException } from '../../domain/index.js';
+import type { I{{Pascal}}Repository } from '../../domain/index.js';
+import { {{Pascal}}ErrorCodes } from '@/core/index.js';
+
+@QueryHandler(Get{{Pascal}}ByIdQuery)
+export class Get{{Pascal}}ByIdHandler implements IQueryHandler<Get{{Pascal}}ByIdQuery> {
+  private readonly logger = new Logger(Get{{Pascal}}ByIdHandler.name);
+
+  constructor(
+    @Inject('I{{Pascal}}Repository')
+    private readonly {{camel}}Repo: I{{Pascal}}Repository,
+  ) {}
+
+  async execute(query: Get{{Pascal}}ByIdQuery): Promise<{{Pascal}}> {
+    this.logger.debug(`Executing Get{{Pascal}}ByIdQuery: ${query.id}`);
+
+    const {{camel}} = await this.{{camel}}Repo.findById(query.id);
+    if (!{{camel}}) {
+      throw new {{Pascal}}DomainException(
+        {{Pascal}}ErrorCodes.{{CONSTANT}}_NOT_FOUND,
+        `{{Pascal}} with ID ${query.id} not found`,
+      );
+    }
+    return {{camel}};
+  }
+}

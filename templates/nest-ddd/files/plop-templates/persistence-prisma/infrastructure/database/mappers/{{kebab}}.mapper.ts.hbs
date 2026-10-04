@@ -1,0 +1,29 @@
+import type { {{Pascal}} as Prisma{{Pascal}} } from '@prisma/client';
+import { {{Pascal}} } from '../../../domain/index.js';
+
+type MutableEntity<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
+/**
+ * Data mapper: translates between the database row (Prisma) and the domain entity, so the
+ * domain never depends on the ORM.
+ */
+export class {{Pascal}}PersistenceMapper {
+  static toDomain(row: Prisma{{Pascal}}): {{Pascal}} {
+    const entity = new {{Pascal}}({ name: row.name }, row.id);
+
+    // Hydrate the read-only audit fields. Wrapped in `new Date(...)` so it also works when the
+    // row came back from a JSON cache (dates arrive as ISO strings there).
+    const mutable = entity as MutableEntity<{{Pascal}}>;
+    mutable.createdAt = new Date(row.createdAt);
+    mutable.updatedAt = new Date(row.updatedAt);
+    return entity;
+  }
+
+  static toPersistence(
+    entity: {{Pascal}},
+  ): Omit<Prisma{{Pascal}}, 'createdAt' | 'updatedAt'> {
+    return { id: entity.id, name: entity.name };
+  }
+}

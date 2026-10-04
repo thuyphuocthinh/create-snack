@@ -1,0 +1,10 @@
+import { DomainEvent } from '@/core/index.js';
+
+export class {{Pascal}}CreatedEvent extends DomainEvent {
+  constructor(
+    public readonly aggregateId: string,
+    public readonly name: string,
+  ) {
+    super(aggregateId);
+  }
+}

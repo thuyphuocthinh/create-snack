@@ -1,0 +1,14 @@
+export const {{Pascal}}ErrorCodes = {
+  {{CONSTANT}}_NOT_FOUND: {
+    code: '{{CODE}}-001',
+    message: '{{Pascal}} not found',
+    status: HttpStatus.NOT_FOUND,
+  },
+  {{CONSTANT}}_INVALID_NAME: {
+    code: '{{CODE}}-002',
+    message: '{{Pascal}} name must not be empty',
+    status: HttpStatus.BAD_REQUEST,
+  },
+};
+
+// @plop:error-codes

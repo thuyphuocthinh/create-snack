@@ -1,0 +1,25 @@
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Inject, Logger } from '@nestjs/common';
+import { Create{{Pascal}}Command } from './create-{{kebab}}.command.js';
+import { {{Pascal}} } from '../../domain/index.js';
+import type { I{{Pascal}}Repository } from '../../domain/index.js';
+
+@CommandHandler(Create{{Pascal}}Command)
+export class Create{{Pascal}}Handler implements ICommandHandler<Create{{Pascal}}Command> {
+  private readonly logger = new Logger(Create{{Pascal}}Handler.name);
+
+  constructor(
+    @Inject('I{{Pascal}}Repository')
+    private readonly {{camel}}Repo: I{{Pascal}}Repository,
+  ) {}
+
+  async execute(command: Create{{Pascal}}Command): Promise<{{Pascal}}> {
+    this.logger.log(`Executing Create{{Pascal}}Command: ${command.name}`);
+
+    const {{camel}} = {{Pascal}}.create(command.name);
+    await this.{{camel}}Repo.save({{camel}});
+
+    this.logger.log(`Created {{kebab}} with ID: ${ {{camel}}.id }`);
+    return {{camel}};
+  }
+}

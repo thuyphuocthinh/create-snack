@@ -1,0 +1,11 @@
+{
+  "id": "react-fsd",
+  "label": "React · Vite + TS (Feature Sliced Design)",
+  "group": "frontend",
+  "description": "React Vite template with FSD architecture folders",
+  "supportsInfra": false,
+  "nextSteps": [
+    "npm install",
+    "npm run dev"
+  ]
+}

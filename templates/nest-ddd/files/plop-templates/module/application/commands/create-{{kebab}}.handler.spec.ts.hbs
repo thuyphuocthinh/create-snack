@@ -1,0 +1,35 @@
+import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { Create{{Pascal}}Handler } from './create-{{kebab}}.handler.js';
+import { Create{{Pascal}}Command } from './create-{{kebab}}.command.js';
+import { {{Pascal}}, {{Pascal}}DomainException } from '../../domain/index.js';
+import { {{Pascal}}ErrorCodes } from '@/core/index.js';
+
+describe('Create{{Pascal}}Handler', () => {
+  let handler: Create{{Pascal}}Handler;
+  let {{camel}}Repo: any;
+
+  beforeEach(() => {
+    {{camel}}Repo = { findById: vi.fn(), save: vi.fn() };
+    handler = new Create{{Pascal}}Handler({{camel}}Repo);
+  });
+
+  it('creates and saves a {{kebab}}', async () => {
+    {{camel}}Repo.save.mockResolvedValueOnce(undefined);
+
+    const {{camel}} = await handler.execute(new Create{{Pascal}}Command('Sample'));
+
+    expect({{camel}}).toBeInstanceOf({{Pascal}});
+    expect({{camel}}.name).toBe('Sample');
+    expect({{camel}}Repo.save).toHaveBeenCalledWith({{camel}});
+  });
+
+  it('rejects an empty name', async () => {
+    await expect(handler.execute(new Create{{Pascal}}Command('  '))).rejects.toThrow(
+      {{Pascal}}DomainException,
+    );
+    await expect(handler.execute(new Create{{Pascal}}Command('  '))).rejects.toMatchObject({
+      code: {{Pascal}}ErrorCodes.{{CONSTANT}}_INVALID_NAME.code,
+    });
+    expect({{camel}}Repo.save).not.toHaveBeenCalled();
+  });
+});

@@ -1,0 +1,22 @@
+@url_dev=http://localhost:5000/v1/api/
+
+# ### signup
+# POST {{url_dev}}shop/signup
+# Content-Type: application/json
+# x-api-key: abcdefabcdefabcdefabcdef
+
+# {
+#     "name": "Shop TPT",
+#     "email": "tpt4@gmail.com",
+#     "password": "123abc"
+# }
+
+### login
+POST {{url_dev}}shop/login
+Content-Type: application/json
+x-api-key: abcdefabcdefabcdefabcdef
+
+{
+    "email": "tpt2@gmail.com",
+    "password": "123abc"
+}

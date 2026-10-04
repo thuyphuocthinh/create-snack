@@ -1,0 +1,28 @@
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { Inject, Logger } from '@nestjs/common';
+import { {{Pascal}}Query } from './{{kebab}}.query.js';
+import { {{ModulePascal}}, {{ModulePascal}}DomainException } from '../../domain/index.js';
+import type { I{{ModulePascal}}Repository } from '../../domain/index.js';
+import { {{ModulePascal}}ErrorCodes } from '@/core/index.js';
+
+@QueryHandler({{Pascal}}Query)
+export class {{Pascal}}Handler implements IQueryHandler<{{Pascal}}Query> {
+  private readonly logger = new Logger({{Pascal}}Handler.name);
+
+  constructor(
+    @Inject('I{{ModulePascal}}Repository')
+    private readonly repo: I{{ModulePascal}}Repository,
+  ) {}
+
+  async execute(query: {{Pascal}}Query): Promise<{{ModulePascal}}> {
+    this.logger.debug(`Executing {{Pascal}}Query for ${query.id}`);
+
+    const entity = await this.repo.findById(query.id);
+    if (!entity) {
+      throw new {{ModulePascal}}DomainException(
+        {{ModulePascal}}ErrorCodes.{{ModuleConstant}}_NOT_FOUND,
+      );
+    }
+    return entity;
+  }
+}

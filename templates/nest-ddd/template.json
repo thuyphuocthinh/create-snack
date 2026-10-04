@@ -1,0 +1,8 @@
+{
+  "id": "nest-ddd",
+  "label": "NestJS · DDD + CQRS (Clean Architecture)",
+  "group": "backend",
+  "description": "core/ + modules/<context>/{domain,application,infrastructure,presentation}",
+  "supportsInfra": true,
+  "nextSteps": ["start:dev"]
+}

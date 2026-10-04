@@ -1,0 +1,11 @@
+{
+  "id": "react-monolithic",
+  "label": "React · Vite + TS (Monolithic)",
+  "group": "frontend",
+  "description": "Standard React Vite template with simple src/ folder",
+  "supportsInfra": false,
+  "nextSteps": [
+    "npm install",
+    "npm run dev"
+  ]
+}

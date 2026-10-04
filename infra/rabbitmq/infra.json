@@ -1,0 +1,55 @@
+{
+  "id": "rabbitmq",
+  "label": "RabbitMQ (broker + background job queue)",
+  "default": true,
+  "templates": ["nest-ddd"],
+  "dependencies": {
+    "amqplib": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.8"
+  },
+  "env": [
+    "# RabbitMQ (docker-compose.yml) — management UI on http://localhost:15672 (admin/admin)",
+    "RABBITMQ_URL=amqp://admin:admin@localhost:5672",
+    "# rabbitmq | inline (inline runs jobs inside the request: dev/tests only)",
+    "JOB_QUEUE=rabbitmq"
+  ],
+  "docker": {
+    "file": "docker.service.yml",
+    "volumes": ["rabbitmq_data"]
+  },
+  "inject": [
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:imports",
+      "lines": ["import { JobQueueModule } from './core/infrastructure/messaging/jobs/job-queue.module.js';"]
+    },
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:modules",
+      "lines": ["JobQueueModule,"]
+    },
+    {
+      "file": "src/core/index.ts",
+      "marker": "// @infra:barrel",
+      "lines": [
+        "export * from './infrastructure/messaging/rabbitmq/rabbitmq.service.js';",
+        "export * from './infrastructure/messaging/rabbitmq/rabbitmq.module.js';",
+        "export * from './infrastructure/messaging/jobs/job-queue.port.js';",
+        "export * from './infrastructure/messaging/jobs/job-queue.module.js';",
+        "export * from './infrastructure/messaging/jobs/job-payload-cipher.js';"
+      ]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-imports",
+      "lines": ["import { validateMessagingEnv } from './messaging.env.js';"]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-checks",
+      "lines": ["validateMessagingEnv(config, errors);"]
+    }
+  ]
+}

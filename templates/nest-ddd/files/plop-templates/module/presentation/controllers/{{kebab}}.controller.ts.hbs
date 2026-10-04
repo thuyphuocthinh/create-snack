@@ -1,0 +1,53 @@
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Param,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { Create{{Pascal}}Dto } from '../dtos/create-{{kebab}}.dto.js';
+import { {{Pascal}}Mapper } from '../mappers/{{kebab}}.mapper.js';
+import {
+  Create{{Pascal}}Command,
+  Get{{Pascal}}ByIdQuery,
+} from '../../application/index.js';
+import { {{Pascal}} } from '../../domain/index.js';
+
+// Add guards (e.g. @UseGuards(JwtAuthGuard)) once an auth module exists.
+@ApiTags('{{Pascal}}')
+@Controller('{{plural}}')
+export class {{Pascal}}Controller {
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a {{kebab}}' })
+  @ApiResponse({ status: 201, description: '{{Pascal}} created' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  async create(@Body() dto: Create{{Pascal}}Dto) {
+    const {{camel}} = await this.commandBus.execute<Create{{Pascal}}Command, {{Pascal}}>(
+      new Create{{Pascal}}Command(dto.name),
+    );
+    return {{Pascal}}Mapper.toResponse({{camel}});
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get a {{kebab}} by ID' })
+  @ApiParam({ name: 'id', description: '{{Pascal}} ID' })
+  @ApiResponse({ status: 200, description: '{{Pascal}} retrieved' })
+  @ApiResponse({ status: 404, description: '{{Pascal}} not found' })
+  async getById(@Param('id') id: string) {
+    const {{camel}} = await this.queryBus.execute<Get{{Pascal}}ByIdQuery, {{Pascal}}>(
+      new Get{{Pascal}}ByIdQuery(id),
+    );
+    return {{Pascal}}Mapper.toResponse({{camel}});
+  }
+}

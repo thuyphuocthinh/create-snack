@@ -1,0 +1,7 @@
+import { {{Pascal}} } from '../entities/{{kebab}}.entity.js';
+
+/** Port: the domain/application layers depend on this, never on Prisma or any other adapter. */
+export interface I{{Pascal}}Repository {
+  findById(id: string): Promise<{{Pascal}} | null>;
+  save(entity: {{Pascal}}): Promise<void>;
+}

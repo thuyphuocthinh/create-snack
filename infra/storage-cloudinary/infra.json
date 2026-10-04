@@ -1,0 +1,73 @@
+{
+  "id": "storage-cloudinary",
+  "label": "Image storage (Cloudinary, optional at runtime)",
+  "templates": ["nest-ddd"],
+  "dependencies": {
+    "cloudinary": "^2.11.0"
+  },
+  "env": [
+    "# Cloudinary — optional: leave all empty to disable uploads (all three or none)",
+    "CLOUDINARY_CLOUD_NAME=",
+    "CLOUDINARY_API_KEY=",
+    "CLOUDINARY_API_SECRET=",
+    "CLOUDINARY_FOLDER={{PROJECT_NAME}}/images"
+  ],
+  "inject": [
+    {
+      "file": "src/core/domain/exceptions/error-codes.ts",
+      "marker": "// @infra:error-codes",
+      "lines": [
+        "export const StorageErrorCodes = {",
+        "  NOT_CONFIGURED: {",
+        "    code: 'STO-001',",
+        "    message: 'Image upload is not available right now',",
+        "    status: HttpStatus.SERVICE_UNAVAILABLE,",
+        "  },",
+        "  UNAVAILABLE: {",
+        "    code: 'STO-002',",
+        "    message: 'The image could not be saved, please try again later',",
+        "    status: HttpStatus.SERVICE_UNAVAILABLE,",
+        "  },",
+        "  UNREADABLE_IMAGE: {",
+        "    code: 'STO-003',",
+        "    message: 'The file could not be read as an image',",
+        "    status: HttpStatus.BAD_REQUEST,",
+        "  },",
+        "};",
+        ""
+      ]
+    },
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:imports",
+      "lines": ["import { ImageStorageModule } from './core/infrastructure/storage/image-storage.module.js';"]
+    },
+    {
+      "file": "src/app.module.ts",
+      "marker": "// @infra:modules",
+      "lines": ["ImageStorageModule,"]
+    },
+    {
+      "file": "src/core/index.ts",
+      "marker": "// @infra:barrel",
+      "lines": [
+        "export * from './infrastructure/storage/image-storage.port.js';",
+        "export * from './infrastructure/storage/image-type.js';",
+        "export * from './infrastructure/storage/cloudinary-image-storage.js';",
+        "export * from './infrastructure/storage/unconfigured-image-storage.js';",
+        "export * from './infrastructure/storage/image-storage.factory.js';",
+        "export * from './infrastructure/storage/image-storage.module.js';"
+      ]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-imports",
+      "lines": ["import { validateStorageEnv } from './storage.env.js';"]
+    },
+    {
+      "file": "src/core/config/env.validation.ts",
+      "marker": "// @infra:env-checks",
+      "lines": ["validateStorageEnv(config, errors);"]
+    }
+  ]
+}

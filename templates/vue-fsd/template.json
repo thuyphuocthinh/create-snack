@@ -1,0 +1,11 @@
+{
+  "id": "vue-fsd",
+  "label": "Vue · Vite + TS (Feature Sliced Design)",
+  "group": "frontend",
+  "description": "Vue Vite template with FSD architecture folders",
+  "supportsInfra": false,
+  "nextSteps": [
+    "npm install",
+    "npm run dev"
+  ]
+}

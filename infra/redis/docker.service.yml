@@ -1,0 +1,10 @@
+redis:
+  image: redis:7-alpine
+  container_name: {{PROJECT_NAME_SNAKE}}_redis
+  # Append-only file: counters, locks and idempotency records must survive a restart
+  command: redis-server --appendonly yes --appendfsync everysec
+  ports:
+    - '6379:6379'
+  volumes:
+    - redis_data:/data
+  restart: unless-stopped

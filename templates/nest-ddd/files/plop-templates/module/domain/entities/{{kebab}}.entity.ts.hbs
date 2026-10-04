@@ -1,0 +1,37 @@
+import { AggregateRoot } from '@/core/index.js';
+import { {{Pascal}}CreatedEvent } from '../events/{{kebab}}-created.event.js';
+import { {{Pascal}}DomainException } from '../exceptions/{{kebab}}.exception.js';
+import { {{Pascal}}ErrorCodes } from '@/core/index.js';
+
+export interface {{Pascal}}Props {
+  name: string;
+}
+
+/**
+ * Aggregate root of the {{kebab}} bounded context. Only the aggregate root gets a repository;
+ * child entities are reachable through it.
+ */
+export class {{Pascal}} extends AggregateRoot<{{Pascal}}Props> {
+  static create(name: string, id?: string): {{Pascal}} {
+    {{Pascal}}.assertValidName(name);
+    const entity = new {{Pascal}}({ name: name.trim() }, id);
+    entity.addDomainEvent(new {{Pascal}}CreatedEvent(entity.id, entity.name));
+    return entity;
+  }
+
+  get name(): string {
+    return this.props.name;
+  }
+
+  rename(name: string): void {
+    {{Pascal}}.assertValidName(name);
+    this.props.name = name.trim();
+    this.updatedAt = new Date();
+  }
+
+  private static assertValidName(name: string): void {
+    if (!name || name.trim().length === 0) {
+      throw new {{Pascal}}DomainException({{Pascal}}ErrorCodes.{{CONSTANT}}_INVALID_NAME);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "vue-monolithic",
+  "label": "Vue · Vite + TS (Monolithic)",
+  "group": "frontend",
+  "description": "Standard Vue Vite template with simple src/ folder",
+  "supportsInfra": false,
+  "nextSteps": [
+    "npm install",
+    "npm run dev"
+  ]
+}

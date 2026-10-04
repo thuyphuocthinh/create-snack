@@ -1,0 +1,10 @@
+// Prisma schema. Models are added here; migrations live in prisma/migrations.
+// Always use `pnpm prisma:migrate` (never `prisma db push`) so every change leaves a migration file.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}

@@ -1,0 +1,17 @@
+import { Injectable } from '@nestjs/common';
+import { I{{Pascal}}Repository, {{Pascal}} } from '../../../domain/index.js';
+
+/** Non-persistent adapter (data is lost on restart). Replace it with a real adapter, e.g. Prisma. */
+@Injectable()
+export class InMemory{{Pascal}}Repository implements I{{Pascal}}Repository {
+  private readonly items = new Map<string, {{Pascal}}>();
+
+  async findById(id: string): Promise<{{Pascal}} | null> {
+    return this.items.get(id) ?? null;
+  }
+
+  async save(entity: {{Pascal}}): Promise<void> {
+    this.items.set(entity.id, entity);
+    entity.clearEvents();
+  }
+}

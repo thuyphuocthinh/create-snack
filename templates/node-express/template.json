@@ -1,0 +1,11 @@
+{
+    "id":  "node-express",
+    "label":  "Node.js · Express (TipsJS Practice)",
+    "supportsInfra":  false,
+    "description":  "Node.js Express backend template from TipsJS course",
+    "nextSteps":  [
+                      "npm install",
+                      "npm start"
+                  ],
+    "group":  "backend"
+}

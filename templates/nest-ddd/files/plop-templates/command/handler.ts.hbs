@@ -1,0 +1,30 @@
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Inject, Logger } from '@nestjs/common';
+import { {{Pascal}}Command } from './{{kebab}}.command.js';
+import { {{ModulePascal}}DomainException } from '../../domain/index.js';
+import type { I{{ModulePascal}}Repository } from '../../domain/index.js';
+import { {{ModulePascal}}ErrorCodes } from '@/core/index.js';
+
+@CommandHandler({{Pascal}}Command)
+export class {{Pascal}}Handler implements ICommandHandler<{{Pascal}}Command> {
+  private readonly logger = new Logger({{Pascal}}Handler.name);
+
+  constructor(
+    @Inject('I{{ModulePascal}}Repository')
+    private readonly repo: I{{ModulePascal}}Repository,
+  ) {}
+
+  async execute(command: {{Pascal}}Command): Promise<void> {
+    this.logger.log(`Executing {{Pascal}}Command for ${command.id}`);
+
+    const entity = await this.repo.findById(command.id);
+    if (!entity) {
+      throw new {{ModulePascal}}DomainException(
+        {{ModulePascal}}ErrorCodes.{{ModuleConstant}}_NOT_FOUND,
+      );
+    }
+
+    // TODO: call a domain method on `entity` (business rules live there), then:
+    await this.repo.save(entity);
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "create-snack",
+  "version": "1.0.0",
+  "description": "Personal project generator: NestJS DDD, React/Vue FSD & monolith templates + pluggable infra (Prisma, Redis, RabbitMQ...).",
+  "type": "module",
+  "bin": {
+    "create-snack": "./bin/create.mjs"
+  },
+  "scripts": {
+    "create": "node bin/create.mjs",
+    "list": "node bin/create.mjs list",
+    "test": "node --test test/",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "templates/",
+    "infra/"
+  ],
+  "author": "Thuy Phuoc Thinh <thuyphuocthinh@npm>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thuyphuocthinh/create-snack.git"
+  },
+  "homepage": "https://github.com/thuyphuocthinh/create-snack#readme",
+  "bugs": {
+    "url": "https://github.com/thuyphuocthinh/create-snack/issues"
+  }
+}
